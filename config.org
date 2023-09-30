@@ -20,7 +20,7 @@ indentation width you prefer in the ~web-mode~ section.)
     :preface
     (defvar ian/indent-width 4) ; change this value to your preferred width
     :config
-    (setq frame-title-format '("Yay-Evil") ; Yayyyyy Evil!
+    (setq frame-title-format '("Evil Emacs") ; Yayyyyy Evil!
           ring-bell-function 'ignore       ; minimize distraction
           frame-resize-pixelwise t
           default-directory "~/")
@@ -159,16 +159,16 @@ Reduce the highlight delay to instantly.
     :config (show-paren-mode +1))
 #+END_SRC
 ** Setting up some frame defaults
-Maximize the frame by default on start-up. Set the font to size 12.
+Maximize the frame by default on start-up. Set the font to size 22.
 #+BEGIN_SRC emacs-lisp
   (use-package frame
     :preface
     (defun ian/set-default-font ()
       (interactive)
-      (when (member "Consolas" (font-family-list))
-        (set-face-attribute 'default nil :family "Consolas"))
+      (when (member "JetBrains Mono" (font-family-list))
+        (set-face-attribute 'default nil :family "JetBrains Mono"))
       (set-face-attribute 'default nil
-                          :height 120
+                          :height 220
                           :weight 'normal))
     :ensure nil
     :config
@@ -244,7 +244,7 @@ Normally, we need to add ~:ensure t~ to tell ~use-package~ to download packages 
     :config
     (dashboard-setup-startup-hook)
     (setq dashboard-startup-banner 'logo
-          dashboard-banner-logo-title "Yay Evil!"
+          dashboard-banner-logo-title "Evil EMACS"
           dashboard-items nil
           dashboard-set-footer nil))
 #+END_SRC
@@ -408,4 +408,25 @@ Provides us with hints on available keystroke combinations.
   (use-package exec-path-from-shell
     :config (when (memq window-system '(mac ns x))
               (exec-path-from-shell-initialize)))
+#+END_SRC
+
+* hos custom keybinds/settings
+** Switch Meta key
+I have my Alt-key as dwm's MOD key, thus I cannot use it as effectively as
+I should inside emacs.
+#+BEGIN_SRC emacs-lisp
+(setq x-meta-keysym 'super)
+(setq x-super-keysym 'meta)
+#+END_SRC
+** Redo in evil mode just like in vim
+#+BEGIN_SRC emacs-lisp
+(use-package undo-tree) ;; install undo-tree mode
+(require 'undo-tree) ;; load undo-tree
+(global-undo-tree-mode) ;; enable undo-tree system
+(setq evil-undo-system 'undo-tree) ;; set it as undo system
+(setq evil-want-fine-undo 'fine) ;; make redo to behaive like vim's redo system
+#+END_SRC
+** I HATE blinking cursors
+#+BEGIN_SRC emacs-lisp
+(blink-cursor-mode 0)
 #+END_SRC
