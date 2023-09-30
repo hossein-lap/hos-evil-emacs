@@ -42,16 +42,16 @@ This Emacs config starts up **super fast** with an average init time of 0.7 seco
 ![alt text](./wilmersdorf.png)
 
 ### Installation 🍀
-Back up your `~/.emacs.d/` first (if you have one):
+Back up your `~/.config/emacs/` first (if you have one):
 
 ```
-mv ~/.emacs.d/ ~/.emacs.d.bak/
+mv ~/.config/emacs/ ~/.config/emacs.bak/
 ```
 
-Git clone my configuration to your new `~/.emacs.d/` :
+Git clone my configuration to your new `~/.config/emacs/` :
 
 ```
-git clone https://github.com/ianyepan/yay-evil-emacs.git ~/.emacs.d
+git clone https://github.com/ianyepan/yay-evil-emacs.git ~/.config/emacs
 ```
 
 ### "Rolling" Release 🙃
