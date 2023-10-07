@@ -236,14 +236,15 @@ Normally, we need to add ~:ensure t~ to tell ~use-package~ to download packages 
 *** Load custom theme
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'custom-theme-load-path (concat user-emacs-directory "themes/"))
-  (load-theme 'wilmersdorf t) ; an orginal theme created by me.
+  ;; (load-theme 'wilmersdorf t) ; an orginal theme created by me.
 #+END_SRC
 *** Dashboard welcome page
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
     :config
     (dashboard-setup-startup-hook)
-    (setq dashboard-startup-banner 'logo
+    (setq dashboard-startup-banner(concat user-emacs-directory "logo.png")
+    ;; (setq dashboard-startup-banner 'logo
           dashboard-banner-logo-title "Evil EMACS"
           dashboard-items nil
           dashboard-set-footer nil))
@@ -410,7 +411,8 @@ Provides us with hints on available keystroke combinations.
               (exec-path-from-shell-initialize)))
 #+END_SRC
 
-* hos custom keybinds/settings
+
+* hos custom settings
 ** Switch Meta key
 I have my Alt-key as dwm's MOD key, thus I cannot use it as effectively as
 I should inside emacs.
@@ -429,4 +431,56 @@ I should inside emacs.
 ** I HATE blinking cursors
 #+BEGIN_SRC emacs-lisp
 (blink-cursor-mode 0)
+#+END_SRC
+** Custom fonts
+#+begin_src emacs-lisp
+  (defvar hosfamily "Fira Sans") ;; sans face
+  ;; arabic/perisna faces
+  (set-fontset-font t 'arabic "Sahel")
+  (custom-set-faces
+   '(+bidi-arabic-face ((t (
+              :slant normal
+              :weight normal
+              :height 1.0
+              :width normal
+              :foundry "PfEd"
+              :family "Parastoo")))))
+#+end_src
+** Org mode
+#+BEGIN_SRC emacs-lisp
+    ;; defaults: ○ ◉ ✸ ✿
+    ;; custom:   ♥ ● ◇ ✚ ✜ ☯ ◆ ♠ ♣ ♦ ☢ ❀ ◆ ◖ ▶
+    ;; other:    ► • ★ ▸
+
+  (setq org-bullets-bullet-list '("⦿" "◉" "✸" "✿" "◆"))
+    (custom-set-faces
+      `(org-document-title ((t (:inherit outline-1 :height 2.0 :family ,hosfamily))))
+      `(org-level-1        ((t (:inherit outline-1 :height 2.0 :family ,hosfamily))))
+      `(org-level-2        ((t (:inherit outline-2 :height 1.75 :family ,hosfamily))))
+      `(org-level-3        ((t (:inherit outline-3 :height 1.5 :family ,hosfamily))))
+      `(org-level-4        ((t (:inherit outline-4 :height 1.25 :family ,hosfamily))))
+      `(org-level-5        ((t (:inherit outline-5 :height 1.0 :family ,hosfamily)))))
+#+END_SRC
+** Markdown mode
+#+BEGIN_SRC emacs-lisp
+  ;; bullet list
+  (setq markdown-list-item-bullets '("●" "◎" "○" "◆" "◇" "►" "•"))
+  ;; (setq markdown-hide-markup t)
+  (custom-set-faces
+    `(markdown-header-face ((t (:inherit font-lock-function-name-face :weight bold :family ,hosfamily))))
+    '(markdown-header-face-1 ((t (:inherit markdown-header-face :height 2.00))))
+    '(markdown-header-face-2 ((t (:inherit markdown-header-face :height 1.75))))
+    '(markdown-header-face-3 ((t (:inherit markdown-header-face :height 1.50))))
+    '(markdown-header-face-4 ((t (:inherit markdown-header-face :height 1.25))))
+    '(markdown-header-face-5 ((t (:inherit markdown-header-face :height 1.15))))
+    '(markdown-header-face-6 ((t (:inherit markdown-header-face :height 1.00)))))
+#+END_SRC
+** Custom themes
+#+BEGIN_SRC emacs-lisp
+  ;; (load-theme 'ayu-dark t)
+  ;; (load-theme 'hybrid-reverse t)
+  (load-theme 'gruvbox t)
+
+  ;; (load-theme 'solarized-dark t)
+  ;; (load-theme 'horizon t)
 #+END_SRC
