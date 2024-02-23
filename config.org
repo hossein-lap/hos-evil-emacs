@@ -424,7 +424,8 @@ I should inside emacs.
 #+BEGIN_SRC emacs-lisp
 (use-package undo-tree) ;; install undo-tree mode
 (require 'undo-tree) ;; load undo-tree
-(global-undo-tree-mode) ;; enable undo-tree system
+;; (global-undo-tree-mode) ;; enable undo-tree system
+(add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode)
 (setq evil-undo-system 'undo-tree) ;; set it as undo system
 (setq evil-want-fine-undo 'fine) ;; make redo to behaive like vim's redo system
 #+END_SRC
@@ -477,10 +478,17 @@ I should inside emacs.
 #+END_SRC
 ** Custom themes
 #+BEGIN_SRC emacs-lisp
-  ;; (load-theme 'ayu-dark t)
-  ;; (load-theme 'hybrid-reverse t)
-  (load-theme 'gruvbox t)
+  (use-package gruvbox-theme)
+  (use-package ayu-theme)
+  (use-package hybrid-reverse-theme)
+  (use-package solarized-theme)
+  (use-package horizon-theme)
 
-  ;; (load-theme 'solarized-dark t)
-  ;; (load-theme 'horizon t)
+  (load-theme
+    'hybrid-reverse t
+    ;; 'ayu-dark t)
+    ;; 'gruvbox t)
+    ;; 'solarized-dark t)
+    ;; 'horizon t)
+  )
 #+END_SRC
