@@ -6,6 +6,7 @@ configuration (on GNU Emacs 26.3). It's unopinionated and was created
 for general use in mind. The package settings are grouped in a logical
 manner, and I've documented as detailed as possible what each code
 snippet does in this file.
+
 * Settings without corresponding packages
 Clean up the UI and enhance some basic defaults defined in "C Source
 Code". The variable ~ian/indent-width~ controls the default
@@ -59,6 +60,7 @@ indentation width you prefer in the ~web-mode~ section.)
     (global-set-key (kbd "C-x 2") #'ian/split-and-follow-horizontally)
     (global-set-key (kbd "C-x 3") #'ian/split-and-follow-vertically))
 #+END_SRC
+
 * Configuration for built-in packages
 Since we're using use-package as our package management system, we
 might as well try to organize under the same syntax as much as
@@ -66,6 +68,7 @@ possible to keep the configuration consistent. The option
 ~use-package-always-ensure~ is turned on in ~init.el~, so we'll add
 ~:ensure nil~ when configuring the built-in packages.
 #+END_SRC
+
 ** Modernize selection behavior
 Replace the active region just by typing text, just like modern
 editors.
@@ -74,18 +77,14 @@ editors.
     :ensure nil
     :config (delete-selection-mode +1))
 #+END_SRC
+
 ** Disable scroll-bar
 #+BEGIN_SRC emacs-lisp
   (use-package scroll-bar
     :ensure nil
     :config (scroll-bar-mode -1))
 #+END_SRC
-** Enable column numbers
-#+BEGIN_SRC emacs-lisp
-  (use-package simple
-    :ensure nil
-    :config (column-number-mode +1))
-#+END_SRC
+
 ** File-related tweaks
 Don't bother confirming killing processes and don't let backup~ files
 scatter around.
@@ -97,50 +96,7 @@ scatter around.
           create-lockfiles nil ; don't create .# files (crashes 'npm start')
           make-backup-files nil))
 #+END_SRC
-** Automatically refreshes the buffer for changes outside of Emacs
-Auto refreshes every 2 seconds. Don't forget to refresh the version
-control status as well.
-#+BEGIN_SRC emacs-lisp
-  (use-package autorevert
-    :ensure nil
-    :config
-    (global-auto-revert-mode +1)
-    (setq auto-revert-interval 2
-          auto-revert-check-vc-info t
-          global-auto-revert-non-file-buffers t
-          auto-revert-verbose nil))
-#+END_SRC
-** Eldoc: documentation in the mini-buffer
-Slightly shorten eldoc display delay.
-#+BEGIN_SRC emacs-lisp
-  (use-package eldoc
-    :ensure nil
-    :diminish eldoc-mode
-    :config
-    (setq eldoc-idle-delay 0.4))
-#+END_SRC
-** Indentation improvement
-For Java and C/C++, change the formatting style from GNU (the default)
-to the more standard K&R. Here we also set the indentation width of C,
-C++, Java, and Python to the preferred value defined in
-~ian/indent-width~ (all languages default to 4, except JavaScript,
-which is 2, as controlled in ~web-mode~). Of course, you can change
-the value depending on the language as well.
-#+BEGIN_SRC emacs-lisp
-  ;; C, C++, and Java
-  (use-package cc-vars
-    :ensure nil
-    :config
-    (setq-default c-basic-offset ian/indent-width)
-    (setq c-default-style '((java-mode . "java")
-                            (awk-mode . "awk")
-                            (other . "k&r"))))
 
-  ;; Python (both v2 and v3)
-  (use-package python
-    :ensure nil
-    :config (setq python-indent-offset ian/indent-width))
-#+END_SRC
 ** Mouse wheel (track-pad) scroll speed
 By default, the scrolling is way too fast to be precise and helpful,
 let's tune it down a little bit.
@@ -150,6 +106,7 @@ let's tune it down a little bit.
     :config (setq mouse-wheel-scroll-amount '(2 ((shift) . 1))
                   mouse-wheel-progressive-speed nil))
 #+END_SRC
+
 ** Show matching parentheses
 Reduce the highlight delay to instantly.
 #+BEGIN_SRC emacs-lisp
@@ -158,6 +115,7 @@ Reduce the highlight delay to instantly.
     :init (setq show-paren-delay 0)
     :config (show-paren-mode +1))
 #+END_SRC
+
 ** Setting up some frame defaults
 Maximize the frame by default on start-up. Set the font to size 16.
 #+BEGIN_SRC emacs-lisp
@@ -166,25 +124,16 @@ Maximize the frame by default on start-up. Set the font to size 16.
     (defun ian/set-default-font ()
       (interactive)
       (when (member "JetBrains Mono" (font-family-list))
-        (set-face-attribute 'default nil :family "JetBrains Mono"))
+        (set-face-attribute 'default nil :family "Ubuntu Mono"))
       (set-face-attribute 'default nil
-                          :height 160
+                          :height 180
                           :weight 'normal))
     :ensure nil
     :config
     (setq initial-frame-alist '((fullscreen . maximized)))
     (ian/set-default-font))
 #+END_SRC
-** Ediff tweaks
-Enter ediff with side-by-side buffers to better compare the
-differences.
-#+BEGIN_SRC emacs-lisp
-  (use-package ediff
-    :ensure nil
-    :config
-    (setq ediff-window-setup-function #'ediff-setup-windows-plain)
-    (setq ediff-split-window-function #'split-window-horizontally))
-#+END_SRC
+
 ** Auto-pairing quotes and parentheses etc.
 Electric-pair-mode has improved quite a bit in recent Emacs
 versions. No longer need an extra package for this. It also takes care
@@ -194,12 +143,14 @@ of the new-line-and-push-brace feature.
     :ensure nil
     :hook (prog-mode . electric-pair-mode))
 #+END_SRC
+
 ** Clean up whitespace on save
 #+BEGIN_SRC emacs-lisp
   (use-package whitespace
     :ensure nil
     :hook (before-save . whitespace-cleanup))
 #+END_SRC
+
 ** Dired tweaks
 Delete intermediate buffers when navigating through dired.
 #+begin_src emacs-lisp
@@ -212,6 +163,7 @@ Delete intermediate buffers when navigating through dired.
           (put 'dired-find-alternate-file 'disabled nil)
           (define-key dired-mode-map (kbd "RET") #'dired-find-alternate-file))))
 #+end_src
+
 ** Dump custom-set-variables to a garbage file and don't load it
 #+BEGIN_SRC emacs-lisp
   (use-package cus-edit
@@ -219,6 +171,7 @@ Delete intermediate buffers when navigating through dired.
     :config
     (setq custom-file (concat user-emacs-directory "to-be-dumped.el")))
 #+END_SRC
+
 * Third-party packages
 Many Emacsers love having tons of packages -- and that's absolutely
 fine! However, one of the goals of the Yay-Evil distro is to provide
@@ -232,12 +185,15 @@ you prefer the default keybindings, simply disable the section that
 controls the Evil behaviors.
 
 Normally, we need to add ~:ensure t~ to tell ~use-package~ to download packages when it's not available. But since we've added ~use-package-always-ensure~ in ~init.el~, we can omit it.
+
 ** GUI enhancements
+
 *** Load custom theme
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'custom-theme-load-path (concat user-emacs-directory "themes/"))
   ;; (load-theme 'wilmersdorf t) ; an orginal theme created by me.
 #+END_SRC
+
 *** Dashboard welcome page
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
@@ -249,16 +205,7 @@ Normally, we need to add ~:ensure t~ to tell ~use-package~ to download packages 
           dashboard-items nil
           dashboard-set-footer nil))
 #+END_SRC
-*** Syntax highlighting
-Lightweight syntax highlighting improvement for numbers and escape
-sequences (e.g. ~\n, \t~).
-#+BEGIN_SRC emacs-lisp
-  (use-package highlight-numbers
-    :hook (prog-mode . highlight-numbers-mode))
 
-  (use-package highlight-escape-sequences
-    :hook (prog-mode . hes-mode))
-#+END_SRC
 ** Vi keybindings
 I personally find Vi(m) bindings to be the most efficient way of
 editing text (especially code). I also changed the default ~:q~ and
@@ -303,97 +250,30 @@ selection etc.)
     :diminish
     :config (evil-commentary-mode +1))
 #+END_SRC
-** Git Integration
-Tell magit to automatically put us in vi-insert-mode when committing a change.
-#+BEGIN_SRC emacs-lisp
-  (use-package magit
-    :bind ("C-x g" . magit-status)
-    :config (add-hook 'with-editor-mode-hook #'evil-insert-state))
-#+END_SRC
-** Searching/sorting enhancements & project management
-*** Ido, ido-vertical, ido-ubiquitous and fuzzy matching
-Selecting buffers/files with great efficiency. In my opinion, Ido is
-enough to replace Ivy/Counsel and Helm. We install ido-vertical to get
-a better view of the available options (use ~C-n~, ~C-p~ or arrow keys
-to navigate). Ido-ubiquitous (from the ~ido-completing-read+~ package)
-provides us ido-like completions in describing functions and variables
-etc. Fuzzy matching is a nice feature and we have flx-ido for that
-purpose.
-#+BEGIN_SRC emacs-lisp
-  (use-package ido
-    :config
-    (ido-mode +1)
-    (setq ido-everywhere t
-          ido-enable-flex-matching t))
 
-  (use-package ido-vertical-mode
-    :config
-    (ido-vertical-mode +1)
-    (setq ido-vertical-define-keys 'C-n-C-p-up-and-down))
-
-  (use-package ido-completing-read+ :config (ido-ubiquitous-mode +1))
-
-  (use-package flx-ido :config (flx-ido-mode +1))
-#+END_SRC
 ** Programming language support and utilities
-*** Company for auto-completion
-Use ~C-n~ and ~C-p~ to navigate the tooltip.
-#+BEGIN_SRC emacs-lisp
-  (use-package company
-    :diminish company-mode
-    :hook (prog-mode . company-mode)
-    :config
-    (setq company-minimum-prefix-length 1
-          company-idle-delay 0.1
-          company-selection-wrap-around t
-          company-tooltip-align-annotations t
-          company-frontends '(company-pseudo-tooltip-frontend ; show tooltip even for single candidate
-                              company-echo-metadata-frontend))
-    (define-key company-active-map (kbd "C-n") 'company-select-next)
-    (define-key company-active-map (kbd "C-p") 'company-select-previous))
-#+END_SRC
-*** Flycheck
-A modern on-the-fly syntax checking extension -- absolute essential
-#+BEGIN_SRC emacs-lisp
-  (use-package flycheck :config (global-flycheck-mode +1))
-#+END_SRC
+
 *** Org Mode
 Some minimal org mode tweaks: org-bullets gives our headings (h1, h2,
 h3...) a more visually pleasing look.
 #+BEGIN_SRC emacs-lisp
-  (use-package org
-    :hook ((org-mode . visual-line-mode)
-           (org-mode . org-indent-mode)))
+    (use-package org
+      :hook ((org-mode . visual-line-mode)
+             (org-mode . org-indent-mode)
+  ))
 
-  (use-package org-bullets :hook (org-mode . org-bullets-mode))
+    (use-package org-bullets :hook (org-mode . org-bullets-mode))
 #+END_SRC
+
 *** Useful major modes
-Markdown mode and Web mode, the latter covers our usages of HTML/CSS/JS/JSX/TS/TSX/JSON.
+Markdown mode
 #+BEGIN_SRC emacs-lisp
   (use-package markdown-mode
     :hook (markdown-mode . visual-line-mode))
+#+END_SRC
 
-  (use-package web-mode
-    :mode (("\\.html?\\'" . web-mode)
-           ("\\.css\\'"   . web-mode)
-           ("\\.jsx?\\'"  . web-mode)
-           ("\\.tsx?\\'"  . web-mode)
-           ("\\.json\\'"  . web-mode))
-    :config
-    (setq web-mode-markup-indent-offset 2) ; HTML
-    (setq web-mode-css-indent-offset 2)    ; CSS
-    (setq web-mode-code-indent-offset 2)   ; JS/JSX/TS/TSX
-    (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'"))))
-#+END_SRC
 ** Miscellaneous
-*** Diminish minor modes
-The diminish package is used to hide unimportant minor modes in the
-modeline. It provides the ~:diminish~ keyword we've been using in
-other use-package declarations.
-#+BEGIN_SRC emacs-lisp
-  (use-package diminish
-    :demand t)
-#+END_SRC
+
 *** Which-key
 Provides us with hints on available keystroke combinations.
 #+BEGIN_SRC emacs-lisp
@@ -404,15 +284,10 @@ Provides us with hints on available keystroke combinations.
     (setq which-key-idle-delay 0.4
           which-key-idle-secondary-delay 0.4))
 #+END_SRC
-*** Configure PATH on macOS
-#+BEGIN_SRC emacs-lisp
-  (use-package exec-path-from-shell
-    :config (when (memq window-system '(mac ns x))
-              (exec-path-from-shell-initialize)))
-#+END_SRC
 
 
 * hos custom settings
+
 ** Transparent background
 #+BEGIN_SRC emacs-lisp
 ;; ;; method 1
@@ -422,6 +297,7 @@ Provides us with hints on available keystroke combinations.
 (set-frame-parameter (selected-frame) 'alpha '(95 95))
 (add-to-list 'default-frame-alist '(alpha 95 95))
 #+END_SRC
+
 ** Switch Meta key
 I have my Alt-key as dwm's MOD key, thus I cannot use it as effectively as
 I should inside emacs.
@@ -429,6 +305,7 @@ I should inside emacs.
 (setq x-meta-keysym 'super)
 (setq x-super-keysym 'meta)
 #+END_SRC
+
 ** Redo in evil mode just like in vim
 #+BEGIN_SRC emacs-lisp
 (use-package undo-tree) ;; install undo-tree mode
@@ -437,10 +314,12 @@ I should inside emacs.
 (setq evil-undo-system 'undo-tree) ;; set it as undo system
 (setq evil-want-fine-undo 'fine) ;; make redo to behaive like vim's redo system
 #+END_SRC
+
 ** I HATE blinking cursors
 #+BEGIN_SRC emacs-lisp
 (blink-cursor-mode 0)
 #+END_SRC
+
 ** Custom fonts
 #+begin_src emacs-lisp
   (defvar hosfamily "Ubuntu") ;; sans face
@@ -455,21 +334,23 @@ I should inside emacs.
               :foundry "PfEd"
               :family "Sahel")))))
 #+end_src
+
 ** Org mode
 #+BEGIN_SRC emacs-lisp
     ;; defaults: ○ ◉ ✸ ✿
     ;; custom:   ♥ ● ◇ ✚ ✜ ☯ ◆ ♠ ♣ ♦ ☢ ❀ ◆ ◖ ▶
     ;; other:    ► • ★ ▸
 
-  (setq org-bullets-bullet-list '("⦿" "◉" "✸" "✿" "◆"))
+  (setq org-bullets-bullet-list '("⦿" "✸" "◆" "◇" "◉"))
     (custom-set-faces
-      `(org-document-title ((t (:inherit outline-1 :height 1.4 :family ,hosfamily))))
-      `(org-level-1        ((t (:inherit outline-1 :height 1.5 :family ,hosfamily))))
-      `(org-level-2        ((t (:inherit outline-2 :height 1.3 :family ,hosfamily))))
-      `(org-level-3        ((t (:inherit outline-3 :height 1.1 :family ,hosfamily))))
-      `(org-level-4        ((t (:inherit outline-4 :height 1.0 :family ,hosfamily))))
-      `(org-level-5        ((t (:inherit outline-5 :height 1.0 :family ,hosfamily)))))
+      `(org-document-title ((t (:inherit outline-1 :weight bold :height 1.4 :family ,hosfamily))))
+      `(org-level-1        ((t (:inherit outline-1 :weight bold :height 1.5 :family ,hosfamily))))
+      `(org-level-2        ((t (:inherit outline-2 :weight bold :height 1.3 :family ,hosfamily))))
+      `(org-level-3        ((t (:inherit outline-3 :weight bold :height 1.1 :family ,hosfamily))))
+      `(org-level-4        ((t (:inherit outline-4 :weight bold :height 1.0 :family ,hosfamily))))
+      `(org-level-5        ((t (:inherit outline-5 :weight bold :height 1.0 :family ,hosfamily)))))
 #+END_SRC
+
 ** Markdown mode
 #+BEGIN_SRC emacs-lisp
   ;; bullet list
@@ -484,6 +365,7 @@ I should inside emacs.
     '(markdown-header-face-5 ((t (:inherit markdown-header-face :height 1.15))))
     '(markdown-header-face-6 ((t (:inherit markdown-header-face :height 1.00)))))
 #+END_SRC
+
 ** Custom themes
 #+BEGIN_SRC emacs-lisp
   (use-package hybrid-reverse-theme)
