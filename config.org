@@ -20,7 +20,7 @@ indentation width you prefer in the ~web-mode~ section.)
     :preface
     (defvar ian/indent-width 4) ; change this value to your preferred width
     :config
-    (setq frame-title-format '("Evil Emacs") ; Yayyyyy Evil!
+    (setq frame-title-format '("Evil") ; Yayyyyy Evil!
           ring-bell-function 'ignore       ; minimize distraction
           frame-resize-pixelwise t
           default-directory "~/")
@@ -159,7 +159,7 @@ Reduce the highlight delay to instantly.
     :config (show-paren-mode +1))
 #+END_SRC
 ** Setting up some frame defaults
-Maximize the frame by default on start-up. Set the font to size 22.
+Maximize the frame by default on start-up. Set the font to size 16.
 #+BEGIN_SRC emacs-lisp
   (use-package frame
     :preface
@@ -168,7 +168,7 @@ Maximize the frame by default on start-up. Set the font to size 22.
       (when (member "JetBrains Mono" (font-family-list))
         (set-face-attribute 'default nil :family "JetBrains Mono"))
       (set-face-attribute 'default nil
-                          :height 220
+                          :height 160
                           :weight 'normal))
     :ensure nil
     :config
@@ -413,6 +413,15 @@ Provides us with hints on available keystroke combinations.
 
 
 * hos custom settings
+** Transparent background
+#+BEGIN_SRC emacs-lisp
+;; ;; method 1
+;; (set-frame-parameter nil 'alpha-background 90)
+;; (add-to-list 'default-frame-alist '(alpha-background . 90))
+;; method 2 -> full transparency
+(set-frame-parameter (selected-frame) 'alpha '(95 95))
+(add-to-list 'default-frame-alist '(alpha 95 95))
+#+END_SRC
 ** Switch Meta key
 I have my Alt-key as dwm's MOD key, thus I cannot use it as effectively as
 I should inside emacs.
@@ -424,8 +433,7 @@ I should inside emacs.
 #+BEGIN_SRC emacs-lisp
 (use-package undo-tree) ;; install undo-tree mode
 (require 'undo-tree) ;; load undo-tree
-;; (global-undo-tree-mode) ;; enable undo-tree system
-(add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode)
+(global-undo-tree-mode) ;; enable undo-tree system
 (setq evil-undo-system 'undo-tree) ;; set it as undo system
 (setq evil-want-fine-undo 'fine) ;; make redo to behaive like vim's redo system
 #+END_SRC
@@ -435,7 +443,7 @@ I should inside emacs.
 #+END_SRC
 ** Custom fonts
 #+begin_src emacs-lisp
-  (defvar hosfamily "Fira Sans") ;; sans face
+  (defvar hosfamily "Ubuntu") ;; sans face
   ;; arabic/perisna faces
   (set-fontset-font t 'arabic "Sahel")
   (custom-set-faces
@@ -445,7 +453,7 @@ I should inside emacs.
               :height 1.0
               :width normal
               :foundry "PfEd"
-              :family "Parastoo")))))
+              :family "Sahel")))))
 #+end_src
 ** Org mode
 #+BEGIN_SRC emacs-lisp
@@ -455,11 +463,11 @@ I should inside emacs.
 
   (setq org-bullets-bullet-list '("⦿" "◉" "✸" "✿" "◆"))
     (custom-set-faces
-      `(org-document-title ((t (:inherit outline-1 :height 2.0 :family ,hosfamily))))
-      `(org-level-1        ((t (:inherit outline-1 :height 2.0 :family ,hosfamily))))
-      `(org-level-2        ((t (:inherit outline-2 :height 1.75 :family ,hosfamily))))
-      `(org-level-3        ((t (:inherit outline-3 :height 1.5 :family ,hosfamily))))
-      `(org-level-4        ((t (:inherit outline-4 :height 1.25 :family ,hosfamily))))
+      `(org-document-title ((t (:inherit outline-1 :height 1.4 :family ,hosfamily))))
+      `(org-level-1        ((t (:inherit outline-1 :height 1.5 :family ,hosfamily))))
+      `(org-level-2        ((t (:inherit outline-2 :height 1.3 :family ,hosfamily))))
+      `(org-level-3        ((t (:inherit outline-3 :height 1.1 :family ,hosfamily))))
+      `(org-level-4        ((t (:inherit outline-4 :height 1.0 :family ,hosfamily))))
       `(org-level-5        ((t (:inherit outline-5 :height 1.0 :family ,hosfamily)))))
 #+END_SRC
 ** Markdown mode
@@ -478,17 +486,18 @@ I should inside emacs.
 #+END_SRC
 ** Custom themes
 #+BEGIN_SRC emacs-lisp
-  (use-package gruvbox-theme)
-  (use-package ayu-theme)
   (use-package hybrid-reverse-theme)
-  (use-package solarized-theme)
-  (use-package horizon-theme)
+  ;; (use-package gruvbox-theme)
+  ;; (use-package ayu-theme)
+  ;; (use-package solarized-theme)
+  ;; (use-package horizon-theme)
 
   (load-theme
-    'hybrid-reverse t
-    ;; 'ayu-dark t)
-    ;; 'gruvbox t)
-    ;; 'solarized-dark t)
-    ;; 'horizon t)
+    'xresources t
+    ;; 'hybrid-reverse t
+    ;; ;; 'ayu-dark t)
+    ;; ;; 'gruvbox t)
+    ;; ;; 'solarized-dark t)
+    ;; ;; 'horizon t)
   )
 #+END_SRC
