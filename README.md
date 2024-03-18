@@ -8,16 +8,16 @@
 <p align="center">
 <a href="https://github.com/ianpan870102/.emacs.d"><img src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" alt="Maintenance"></a>
 <a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/License-GPL%20v3-blue.svg" alt="GPL License"></a>
-<a href="https://github.com/ianyepan/.emacs.d"><img src="https://img.shields.io/github/release/ianyepan/yay-evil-emacs" alt="Version"></a>
+<a href="https://github.com/hossein-lap/.emacs.d"><img src="https://img.shields.io/github/release/hossein-lap/hos-evil-emacs" alt="Version"></a>
 <a href="https://github.com/sindresorhus/awesome"><img src="https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg" alt="Awesome"></a>
 </p>
 
 <p align="center">
-<a href="https://star-history.com/#ianyepan/yay-evil-emacs&Date">
+<a href="https://star-history.com/#hossein-lap/hos-evil-emacs&Date">
   <picture>
-    <source media="(prefers-color-scheme: dark)" width="600" srcset="https://api.star-history.com/svg?repos=ianyepan/yay-evil-emacs&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" width="600" srcset="https://api.star-history.com/svg?repos=ianyepan/yay-evil-emacs&type=Date" />
-    <img alt="Star History Chart" width="600" src="https://api.star-history.com/svg?repos=ianyepan/yay-evil-emacs&type=Date" />
+    <source media="(prefers-color-scheme: dark)" width="600" srcset="https://api.star-history.com/svg?repos=hossein-lap/hos-evil-emacs&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" width="600" srcset="https://api.star-history.com/svg?repos=hossein-lap/hos-evil-emacs&type=Date" />
+    <img alt="Star History Chart" width="600" src="https://api.star-history.com/svg?repos=hossein-lap/hos-evil-emacs&type=Date" />
   </picture>
 </a>
 </p>
@@ -32,8 +32,8 @@ file.
 
 
 You can find my opinionated personal configuration
-[here](https://github.com/ianyepan/.macOS-emacs.d) (for macOS)
-and [here](https://github.com/ianyepan/.wsl-emacs.d) (for Arch and
+[here](https://github.com/hossein-lap/.macOS-emacs.d) (for macOS)
+and [here](https://github.com/hossein-lap/.wsl-emacs.d) (for Arch and
 Ubuntu on WSL2).
 
 
@@ -51,7 +51,7 @@ mv ~/.config/emacs/ ~/.config/emacs.bak/
 Git clone my configuration to your new `~/.config/emacs/` :
 
 ```
-git clone https://github.com/ianyepan/yay-evil-emacs.git ~/.config/emacs
+git clone https://github.com/hossein-lap/hos-evil-emacs.git ~/.config/emacs
 ```
 
 ### "Rolling" Release 🙃
@@ -97,8 +97,8 @@ usage!).
 ### Appendix I: Themes I adore
 
 #### Dark themes
-- Gruvbox Dark (specifically the [Material](https://github.com/ianyepan/.wsl-emacs.d/blob/master/themes/doom-gruvbox-material-theme.el) variant)
-- Visual Studio Code Dark+ [for Emacs](https://github.com/ianyepan/vscode-dark-plus-emacs-theme)
+- Gruvbox Dark (specifically the [Material](https://github.com/hossein-lap/.wsl-emacs.d/blob/master/themes/doom-gruvbox-material-theme.el) variant)
+- Visual Studio Code Dark+ [for Emacs](https://github.com/hossein-lap/vscode-dark-plus-emacs-theme)
 
 #### Light themes
 - [Spacemacs Light](https://github.com/nashamri/spacemacs-theme)
