@@ -4,5 +4,7 @@
 !.gitignore
 !init.el
 !config.org
-!themes/
+!themes/hos-hybrid.el
+!themes/xresources-theme.el
 !logo.png
+!shot.png
