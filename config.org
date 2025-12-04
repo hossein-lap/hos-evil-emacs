@@ -375,11 +375,11 @@ I should inside emacs.
   ;; (use-package horizon-theme)
 
   (load-theme
-    'xresources t
-    ;; 'hybrid-reverse t
-    ;; ;; 'ayu-dark t)
-    ;; ;; 'gruvbox t)
-    ;; ;; 'solarized-dark t)
-    ;; ;; 'horizon t)
+    ;; 'xresources t
+    'hybrid-reverse t
+    ;; 'ayu-dark t
+    ;; 'gruvbox t
+    ;; 'solarized-dark t
+    ;; 'horizon t
   )
 #+END_SRC
